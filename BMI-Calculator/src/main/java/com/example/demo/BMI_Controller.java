@@ -15,36 +15,17 @@ public class BMI_Controller {
     }
 
     @PostMapping("/calculate")
-    public String calculateBMI(@RequestParam("weight") Float weight, @RequestParam("height") float height, Model model) {
-        float bmi = calculateBMIValue(weight, height);
-        String category = getBMICategory(bmi);
+    public String calculateBMI(calculation cal, Model model)
+    {
+        float bmi = cal.calculateBMIValue(cal.getWeight(), cal.getHeight());
+  
+        String category = cal.getBMICategory(bmi);
+        
         model.addAttribute("bmi", bmi);
         model.addAttribute("category", category);
         return "bmiResult.jsp";
     }
 
-    private float calculateBMIValue(Float weight, Float height) {
-        // Formula: BMI = weight (kg) / (height (m) * height (m))
-    	height=height/100;
-        return weight / (height * height);
-    }
 
-    private String getBMICategory(float bmi) 
-    {
-
-    	if(bmi<18.5){
-    	    return "Underweight";
-    	     }else if(18.5<=bmi&&bmi<=24.9){
-    	    return "Healthy";
-    	     }else if(25<=bmi&&bmi<=29.9){
-    	    return "Overweight";
-    	     }else if(30<=bmi&&bmi<=34.9){
-    	    return "Obese";
-    	     }else{
-    	    return "Extremely obese";
-    	     }
-		
-    	
-    }
 }
 
